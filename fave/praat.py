@@ -449,8 +449,13 @@ class TextGrid:
 
     def read(self, filename):
         """reads TextGrid from Praat .TextGrid file (long or short format)"""
-        text = open(filename, 'rU')
-        text.readline()
+        try:
+            text = open(filename, 'r')
+            text.readline()
+        except:
+            text = open(filename, 'r', encoding='utf-16')
+            text.readline()
+            
                       # header                            ## line reads 'File
                       # type = "ooTextFile"'
         text.readline()  # line reads 'Object class = "TextGrid"'

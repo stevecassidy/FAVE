@@ -457,7 +457,7 @@ def checkSpeechSoftware(speechSoftware):
             sys.exit()
         else:
             return 'esps'
-    elif speechSoftware in ['praat', 'Praat']:
+    elif speechSoftware in ['praat', 'Praat', 'praat_nogui']:
         if not ((PRAATPATH and programExists(speechSoftware, PRAATPATH)) or (os.name == 'posix' and programExists(speechSoftware)) or (os.name == 'nt' and programExists('praatcon.exe'))):
             print("ERROR: Praat was specified as the speech analysis program, but the command 'praat' ('praatcon' for Windows) is not in your path")
             sys.exit()
@@ -1827,7 +1827,7 @@ def setup_parser():
                         help="Do a second pass is performed on the data, using the speaker's own system as the base of comparison for the Mahalanobis distance")
     parser.add_argument("--removeStopWords", action="store_true",
                         help="Don't measure vowels in stop words." )
-    parser.add_argument("--speechSoftware", choices = ['praat', 'Praat', 'esps', 'ESPS'], default = "Praat",
+    parser.add_argument("--speechSoftware", choices = ['praat_nogui', 'praat', 'Praat', 'esps', 'ESPS'], default = "Praat",
                         help="The speech software program to be used for LPC analysis.")
     parser.add_argument("--speaker",  "-s",
                         help = "*.speaker file, if used")

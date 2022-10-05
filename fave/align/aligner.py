@@ -315,7 +315,7 @@ class Aligner():
                 duration,
                 counts)
         except BaseException: # pylint: disable=broad-except
-            self.logger.error('Unable to write .FAAVlog')
+            self.logger.error('Unable to write ' + os.path.splitext(wavfile)[0] + ".FAAVlog")
         else:
             self.logger.debug(
                 "Written log file %s.",
@@ -441,6 +441,7 @@ class Aligner():
             f.write(tempplp + '\n')
 
         try:
+            thisdir = os.path.dirname(os.path.abspath(__file__))
             # call plp.sh and align.sh
             self.logger.debug(f'Toolspath is "{HTKTOOLSPATH}"')
             if HTKTOOLSPATH:  # if absolute path to HTK Toolkit is given
@@ -452,12 +453,12 @@ class Aligner():
             self.logger.debug(f'HCopy is "{HCopy}"')
             self.logger.debug(f'HVite is "{HVite}"')
             modelconfig = os.path.join(
-                '.', 'align', 'model', str(SR), 'config')
+                thisdir, 'model', str(SR), 'config')
             modelmacros = os.path.join(
-                '.', 'align', 'model', str(SR), 'macros')
+                thisdir, 'model', str(SR), 'macros')
             modelhmmdef = os.path.join(
-                '.', 'align', 'model', str(SR), 'hmmdefs')
-            modelmonophones = os.path.join('.', 'align', 'model', 'monophones')
+                thisdir, 'model', str(SR), 'hmmdefs')
+            modelmonophones = os.path.join(thisdir, 'model', 'monophones')
             pipedest = os.path.join(
                 '.', 'tmp', identifier, 'blubbeldiblubb.txt')
             HCopyCommand = HCopy + ' -T 1 -C ' + modelconfig + \
